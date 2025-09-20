@@ -33,6 +33,28 @@
         .text-chainguard-teal { color: #7AF0FE; }
         .bg-chainguard-dark { background-color: #14003D; }
         .bg-chainguard-darker { background-color: #110033; }
+
+        /* Enhanced hover states */
+        .certificate-row:hover .text-chainguard-teal {
+            text-decoration: underline;
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Smooth transitions */
+        .bundle-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        /* Enhanced drag states */
+        .drag-active {
+            border-color: #7AF0FE !important;
+            background-color: rgba(122, 240, 254, 0.05) !important;
+        }
     </style>
 </head>
 <body class="min-h-screen text-white">
@@ -113,18 +135,120 @@
                 </div>
 
                 <div class="divide-y divide-gray-700" id="packagesTable">
-                    <div class="hover:bg-gray-800/30 transition-colors cursor-pointer">
+                    <!-- Individual AWS Certificates -->
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="aws-ec2-internal" onclick="viewCertificate('aws-ec2-internal')">
                         <div class="px-2 py-2">
                             <div class="grid grid-cols-5 gap-4 text-sm px-2">
-                                <div class="text-chainguard-teal font-medium" style="width: 238px;">custom-cert-aws-internal-key</div>
-                                <div class="text-white" style="width: 209px;">*.cloud-services.com CA</div>
-                                <div class="text-white" style="width: 159px;">Cloud Services Root CA</div>
-                                <div class="text-white" style="width: 132px;">May 30, 2027</div>
-                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">36 minutes ago</div>
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">aws-ec2-internal-cert</div>
+                                <div class="text-white" style="width: 209px;">*.ec2.internal CA</div>
+                                <div class="text-white" style="width: 159px;">Amazon EC2 Root CA</div>
+                                <div class="text-white" style="width: 132px;">Dec 15, 2026</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">2 hours ago</div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="aws-elb-cert" onclick="viewCertificate('aws-elb-cert')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">aws-elb-ssl-cert</div>
+                                <div class="text-white" style="width: 209px;">*.elb.amazonaws.com</div>
+                                <div class="text-white" style="width: 159px;">AWS Load Balancer CA</div>
+                                <div class="text-white" style="width: 132px;">Aug 22, 2027</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 day ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="aws-cloudfront" onclick="viewCertificate('aws-cloudfront')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">aws-cloudfront-ssl</div>
+                                <div class="text-white" style="width: 209px;">*.cloudfront.net</div>
+                                <div class="text-white" style="width: 159px;">CloudFront Distribution CA</div>
+                                <div class="text-white" style="width: 132px;">Mar 10, 2028</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual GCP Certificates -->
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="gcp-compute" onclick="viewCertificate('gcp-compute')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">gcp-compute-engine-cert</div>
+                                <div class="text-white" style="width: 209px;">*.compute.googleapis.com</div>
+                                <div class="text-white" style="width: 159px;">Google Compute CA</div>
+                                <div class="text-white" style="width: 132px;">Nov 18, 2027</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">5 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="gcp-storage" onclick="viewCertificate('gcp-storage')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">gcp-cloud-storage-cert</div>
+                                <div class="text-white" style="width: 209px;">*.storage.googleapis.com</div>
+                                <div class="text-white" style="width: 159px;">Google Cloud Storage CA</div>
+                                <div class="text-white" style="width: 132px;">Sep 5, 2027</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">12 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual Azure Certificates -->
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="azure-webapp" onclick="viewCertificate('azure-webapp')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">azure-webapp-ssl</div>
+                                <div class="text-white" style="width: 209px;">*.azurewebsites.net</div>
+                                <div class="text-white" style="width: 159px;">Microsoft Azure CA</div>
+                                <div class="text-white" style="width: 132px;">Jun 12, 2026</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">6 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="azure-keyvault" onclick="viewCertificate('azure-keyvault')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">azure-keyvault-cert</div>
+                                <div class="text-white" style="width: 209px;">*.vault.azure.net</div>
+                                <div class="text-white" style="width: 159px;">Azure Key Vault CA</div>
+                                <div class="text-white" style="width: 132px;">Apr 8, 2028</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">8 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DoD Certificate -->
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="individual" data-cert-id="dod-pki" onclick="viewCertificate('dod-pki')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">dod-enterprise-pki</div>
+                                <div class="text-white" style="width: 209px;">*.dod.mil</div>
+                                <div class="text-white" style="width: 159px;">DoD Root CA 6</div>
+                                <div class="text-white" style="width: 132px;">Jan 24, 2053</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 day ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Uploaded Certificate -->
+                    <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" data-cert-type="custom" data-cert-id="internal-ca" onclick="viewCertificate('internal-ca')">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">internal-ca-bundle</div>
+                                <div class="text-white" style="width: 209px;">*.internal.company.com</div>
+                                <div class="text-white" style="width: 159px;">Internal Root CA</div>
+                                <div class="text-white" style="width: 132px;">Oct 15, 2025</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AWS Expandable Bundle -->
                     <div class="expandable-bundle">
                         <div class="hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
                             <div class="px-2 py-2">
@@ -132,21 +256,77 @@
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow"></i>
                                         <i data-lucide="folder" class="lucide text-chainguard-teal"></i>
-                                        <span class="text-chainguard-teal font-medium">custom-cert-aws-internal-bundle (3)</span>
+                                        <span class="text-chainguard-teal font-medium cursor-pointer" onclick="event.stopPropagation(); viewCertificate('aws-services-bundle');">aws-services-bundle (3)</span>
                                     </div>
-                                    <div class="text-chainguard-text-secondary text-sm">36 minutes ago</div>
+                                    <div class="text-chainguard-text-secondary text-sm">1 week ago</div>
                                 </div>
                             </div>
                         </div>
                         <div class="bundle-content hidden pl-8 bg-gray-800/20">
                             <div class="divide-y divide-gray-700/50">
-                                <div class="px-2 py-2">
+                                <div class="certificate-row hover:bg-gray-700/30 transition-colors cursor-pointer px-2 py-2" onclick="viewCertificate('aws-bundle-cert-1')">
                                     <div class="grid grid-cols-5 gap-4 text-sm px-2">
                                         <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
-                                        <div class="text-white" style="width: 209px;">Cloud Serve DMZ Issuing CA1</div>
-                                        <div class="text-white" style="width: 159px;">AWS Root CA</div>
-                                        <div class="text-white" style="width: 132px;">May 30, 2027</div>
-                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">36 minutes ago</div>
+                                        <div class="text-white" style="width: 209px;">*.s3.amazonaws.com</div>
+                                        <div class="text-white" style="width: 159px;">AWS S3 Service CA</div>
+                                        <div class="text-white" style="width: 132px;">Dec 31, 2027</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 week ago</div>
+                                    </div>
+                                </div>
+                                <div class="certificate-row hover:bg-gray-700/30 transition-colors cursor-pointer px-2 py-2" onclick="viewCertificate('aws-bundle-cert-2')">
+                                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                        <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
+                                        <div class="text-white" style="width: 209px;">*.rds.amazonaws.com</div>
+                                        <div class="text-white" style="width: 159px;">AWS RDS Service CA</div>
+                                        <div class="text-white" style="width: 132px;">Dec 31, 2027</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 week ago</div>
+                                    </div>
+                                </div>
+                                <div class="certificate-row hover:bg-gray-700/30 transition-colors cursor-pointer px-2 py-2" onclick="viewCertificate('aws-bundle-cert-3')">
+                                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                        <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
+                                        <div class="text-white" style="width: 209px;">*.lambda.amazonaws.com</div>
+                                        <div class="text-white" style="width: 159px;">AWS Lambda Service CA</div>
+                                        <div class="text-white" style="width: 132px;">Dec 31, 2027</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 week ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GCP Expandable Bundle -->
+                    <div class="expandable-bundle">
+                        <div class="hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
+                            <div class="px-2 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow"></i>
+                                        <i data-lucide="folder" class="lucide text-chainguard-teal"></i>
+                                        <span class="text-chainguard-teal font-medium cursor-pointer" onclick="event.stopPropagation(); viewCertificate('gcp-platform-bundle');">gcp-platform-bundle (2)</span>
+                                    </div>
+                                    <div class="text-chainguard-text-secondary text-sm">2 weeks ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bundle-content hidden pl-8 bg-gray-800/20">
+                            <div class="divide-y divide-gray-700/50">
+                                <div class="certificate-row hover:bg-gray-700/30 transition-colors cursor-pointer px-2 py-2" onclick="viewCertificate('gcp-bundle-cert-1')">
+                                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                        <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
+                                        <div class="text-white" style="width: 209px;">*.googleapis.com</div>
+                                        <div class="text-white" style="width: 159px;">Google APIs CA</div>
+                                        <div class="text-white" style="width: 132px;">Jan 20, 2029</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">2 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="certificate-row hover:bg-gray-700/30 transition-colors cursor-pointer px-2 py-2" onclick="viewCertificate('gcp-bundle-cert-2')">
+                                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                        <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
+                                        <div class="text-white" style="width: 209px;">*.gcp.goog</div>
+                                        <div class="text-white" style="width: 159px;">GCP Internal CA</div>
+                                        <div class="text-white" style="width: 132px;">Jan 20, 2029</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">2 weeks ago</div>
                                     </div>
                                 </div>
                             </div>
@@ -177,6 +357,10 @@
                     <div id="step-selection">
                         <h3 class="text-lg font-semibold text-white mb-4">Choose how to create your package</h3>
                         <div class="space-y-4">
+                            <button onclick="showUpload()" class="w-full p-6 text-left rounded-lg border border-gray-600 hover:border-chainguard-teal hover:bg-chainguard-teal/5 transition-all group" style="background-color: rgba(17, 0, 51, 0.5);">
+                                <h4 class="text-white font-medium mb-2 group-hover:text-chainguard-teal">Upload Certificate Bundle</h4>
+                                <p class="text-sm text-gray-300">Create a custom package by uploading your own certificate files in PEM or PKCS#7 format</p>
+                            </button>
                             <button onclick="showSuggestions()" class="w-full p-6 text-left rounded-lg border border-gray-600 hover:border-chainguard-teal hover:bg-chainguard-teal/5 transition-all group" style="background-color: rgba(17, 0, 51, 0.5);">
                                 <h4 class="text-white font-medium mb-2 group-hover:text-chainguard-teal">Browse Chainguard Suggestions</h4>
                                 <p class="text-sm text-gray-300">Create packages from popular, auto-updating certificate bundles managed by Chainguard</p>
@@ -222,6 +406,40 @@
                         </div>
                     </div>
 
+                    <!-- Step 2.5: Upload Certificate -->
+                    <div id="step-upload" class="hidden">
+                        <h3 class="text-lg font-semibold text-white mb-2">Upload Certificate</h3>
+                        <p class="text-sm text-gray-300 mb-6">Upload your own certificate bundle in PEM or PKCS#7 format</p>
+
+                        <div class="space-y-6">
+                            <!-- Drag & Drop Area -->
+                            <div id="upload-area" class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center cursor-pointer hover:border-gray-500 transition-colors" style="background-color: rgba(17, 0, 51, 0.3);">
+                                <input type="file" id="file-input" class="hidden" accept=".pem,.crt,.cer,.p7b,.p7c">
+                                <i data-lucide="upload" class="lucide text-gray-400 mx-auto mb-4" style="width: 2rem; height: 2rem;"></i>
+                                <h4 class="text-white font-medium mb-2">Drop certificate file here or click to browse</h4>
+                                <p class="text-sm text-gray-300">Supports PEM, CRT, CER, PKCS#7 formats</p>
+                            </div>
+
+                            <!-- Certificate Preview -->
+                            <div id="certificate-preview" class="hidden">
+                                <h4 class="text-sm font-medium text-white mb-2">Certificate Content</h4>
+                                <div class="bg-chainguard-darker border border-gray-600 rounded-lg overflow-hidden">
+                                    <div class="relative">
+                                        <div id="line-numbers" class="absolute left-2 top-2 text-xs text-gray-500 font-mono leading-5 text-right w-6 select-none"></div>
+                                        <div id="certificate-content" class="pl-10 pr-4 py-2 text-xs font-mono text-gray-300 leading-5 max-h-48 overflow-y-auto"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Package Name -->
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-white">Package name</label>
+                                <input id="upload-package-name" type="text" class="w-full px-3 py-2 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-sm">
+                                <p class="text-xs text-gray-400">Package name can only contain ASCII letters, digits, and the characters ., -, and _.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Step 3: Package Configuration -->
                     <div id="step-details" class="hidden">
                         <h3 class="text-lg font-semibold text-white mb-2">Configure Package</h3>
@@ -241,12 +459,16 @@
 
                 <div class="p-6 border-t border-gray-700">
                     <div class="flex justify-between">
-                        <button id="backBtn" onclick="goBack()" class="hidden flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white transition-colors">
-                            <i data-lucide="arrow-left" class="lucide"></i>Back
-                        </button>
-                        <button id="nextBtn" onclick="proceedNext()" class="hidden bg-chainguard-teal hover:bg-opacity-90 text-black px-6 py-2 rounded-md font-medium flex items-center gap-2 transition-colors">
-                            Next <i data-lucide="arrow-right" class="lucide"></i>
-                        </button>
+                        <div class="flex gap-3">
+                            <button id="backBtn" onclick="goBack()" class="hidden flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white transition-colors">
+                                <i data-lucide="arrow-left" class="lucide"></i>Back
+                            </button>
+                        </div>
+                        <div class="flex gap-3">
+                            <button id="nextBtn" onclick="proceedNext()" class="hidden bg-chainguard-teal hover:bg-opacity-90 text-black px-6 py-2 rounded-md font-medium flex items-center gap-2 transition-colors">
+                                Next <i data-lucide="arrow-right" class="lucide"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -257,11 +479,87 @@
         Custom package created successfully!
     </div>
 
+    <!-- Delete Confirmation Dialog -->
+    <div id="deleteDialog" class="fixed inset-0 z-60 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-chainguard-dark border border-gray-700 rounded-lg p-6 w-96">
+            <h3 class="text-lg font-semibold text-white mb-4">Delete Certificate Package</h3>
+            <p class="text-gray-300 mb-6">Are you sure you want to delete <span id="delete-cert-name" class="text-chainguard-teal font-medium"></span>? This action cannot be undone.</p>
+            <div class="flex gap-3 justify-end">
+                <button onclick="cancelDelete()" class="px-4 py-2 text-gray-300 hover:text-white transition-colors">Cancel</button>
+                <button onclick="confirmDelete()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors">Delete</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
         let selectedBundle = null;
         let currentStep = 'selection';
+        let uploadedFile = null;
+        let uploadedFileContent = null;
+        let currentViewingCert = null;
+        let certificateToDelete = null;
+        let isEditMode = false;
+
+        // Certificate database
+        const certificateData = {
+            'aws-ec2-internal': {
+                type: 'individual',
+                packageName: 'aws-ec2-internal-cert',
+                commonName: '*.ec2.internal CA',
+                issuer: 'Amazon EC2 Root CA',
+                expiryDate: 'Dec 15, 2026',
+                lastUpdated: '2 hours ago',
+                source: 'AWS Private CA',
+                sourceUrl: 'https://docs.aws.amazon.com/privateca/',
+                certificateContent: `-----BEGIN CERTIFICATE-----
+MIIEyTCCArGgAwIBAgIJAL8zQ4z6+XYfMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
+BAYTAlVTMQswCQYDVQQIDAJXQTEQMA4GA1UEBwwHU2VhdHRsZTEPMA0GA1UECgwG
+QW1hem9uMQswCQYDVQQLDAJFQzEPMA0GA1UEAwwGRUMyIENBMB4XDTI0MDExNTAw
+MDAwMFoXDTI2MTIxNTAwMDAwMFowRTELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAldB
+MRAwDgYDVQQHDAdTZWF0dGxlMQ8wDQYDVQQKDAZBbWF6b24xCzAJBgNVBAsMAkVD
+MQ8wDQYDVQQDDAZFQzIgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+AQC8qBu+0w51OkG8fw3ReHS/itcp9AEFC4ETwumtfwlS+tmxBU3ulJPATIHC/TCO
+g6TksvijvwT8RJdmgOUQj1u/+PEo6C7tgBgM5t0RR3kYCFI2j1tRObJ4XVFELK
+-----END CERTIFICATE-----`
+            },
+            'aws-elb-cert': {
+                type: 'individual',
+                packageName: 'aws-elb-ssl-cert',
+                commonName: '*.elb.amazonaws.com',
+                issuer: 'AWS Load Balancer CA',
+                expiryDate: 'Aug 22, 2027',
+                lastUpdated: '1 day ago',
+                source: 'AWS Private CA',
+                sourceUrl: 'https://docs.aws.amazon.com/privateca/',
+                certificateContent: `-----BEGIN CERTIFICATE-----
+MIIEyTCCArGgAwIBAgIJAK8wE3z7+XYgMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
+BAYTAlVTMQswCQYDVQQIDAJXQTEQMA4GA1UEBwwHU2VhdHRsZTEPMA0GA1UECgwG
+QW1hem9uMQswCQYDVQQLDAJFTEIxDzANBgNVBAMMBkVMQiBDQTAeFw0yNDA4MjIA
+-----END CERTIFICATE-----`
+            },
+            'internal-ca': {
+                type: 'custom',
+                packageName: 'internal-ca-bundle',
+                commonName: '*.internal.company.com',
+                issuer: 'Internal Root CA',
+                expiryDate: 'Oct 15, 2025',
+                lastUpdated: '3 days ago',
+                source: 'Custom Upload',
+                fileName: 'internal-ca.pem',
+                certificateContent: `-----BEGIN CERTIFICATE-----
+MIIEyTCCArGgAwIBAgIJAL8zQ4z6+Custom0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV
+BAYTAlVTMRAwDgYDVQQHDAdDb21wYW55MRUwEwYDVQQKDAxJbnRlcm5hbCBPcmcx
+FTATBgNVBAsMDElUIERlcGFydG1lbnQxGDAWBgNVBAMMD0ludGVybmFsIFJvb3Qg
+Q0EwHhcNMjQxMDE1MDAwMDAwWhcNMjUxMDE1MDAwMDAwWjBFMQswCQYDVQQGEwJV
+UzEQMA4GA1UEBwwHQ29tcGFueTEVMBMGA1UECgwMSW50ZXJuYWwgT3JnMRUwEwYD
+VQQLDAxJVCBEZXBhcnRtZW50MRgwFgYDVQQDDA9JbnRlcm5hbCBSb290IENBMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2l8zJ4fQ7ZxKl5UW8vR1mHxQ
+-----END CERTIFICATE-----`
+            }
+        };
 
         function openPanel() {
             console.log('Opening panel...');
@@ -272,6 +570,14 @@
             console.log('Closing panel...');
             document.getElementById('panelOverlay').classList.add('hidden');
             resetToSelection();
+        }
+
+        function showUpload() {
+            console.log('Showing upload...');
+            document.getElementById('step-selection').classList.add('hidden');
+            document.getElementById('step-upload').classList.remove('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            currentStep = 'upload';
         }
 
         function showSuggestions() {
@@ -407,11 +713,16 @@
         function goBack() {
             if (currentStep === 'details') {
                 document.getElementById('step-details').classList.add('hidden');
-                document.getElementById('step-suggestions').classList.remove('hidden');
+                if (selectedBundle) {
+                    document.getElementById('step-suggestions').classList.remove('hidden');
+                    currentStep = 'suggestions';
+                } else {
+                    document.getElementById('step-upload').classList.remove('hidden');
+                    currentStep = 'upload';
+                }
                 document.getElementById('nextBtn').innerHTML = 'Next <i data-lucide="arrow-right" class="lucide"></i>';
                 lucide.createIcons();
-                currentStep = 'suggestions';
-            } else if (currentStep === 'suggestions') {
+            } else if (currentStep === 'suggestions' || currentStep === 'upload') {
                 resetToSelection();
             }
         }
@@ -419,9 +730,29 @@
         function resetToSelection() {
             document.getElementById('step-details').classList.add('hidden');
             document.getElementById('step-suggestions').classList.add('hidden');
+            document.getElementById('step-upload').classList.add('hidden');
             document.getElementById('step-selection').classList.remove('hidden');
             document.getElementById('backBtn').classList.add('hidden');
             document.getElementById('nextBtn').classList.add('hidden');
+
+            // Reset header
+            const header = document.querySelector('#panelOverlay h2');
+            header.textContent = 'Create Custom Package';
+
+            // Reset next button
+            document.getElementById('nextBtn').innerHTML = 'Next <i data-lucide="arrow-right" class="lucide"></i>';
+            document.getElementById('nextBtn').onclick = proceedNext;
+
+            // Remove edit/delete buttons if they exist
+            const cancelBtn = document.getElementById('cancelBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+            if (cancelBtn) cancelBtn.remove();
+            if (deleteBtn) deleteBtn.remove();
+
+            // Reset package name input
+            const packageNameInput = document.getElementById('packageNameInput');
+            packageNameInput.disabled = false;
+            packageNameInput.value = '';
 
             // Reset selections
             document.querySelectorAll('.certificate-option').forEach(opt => {
@@ -430,7 +761,16 @@
             });
 
             selectedBundle = null;
+            uploadedFile = null;
+            uploadedFileContent = null;
+            currentViewingCert = null;
+            isEditMode = false;
             currentStep = 'selection';
+
+            // Reset upload form
+            document.getElementById('file-input').value = '';
+            document.getElementById('certificate-preview').classList.add('hidden');
+            document.getElementById('upload-package-name').value = '';
         }
 
         function addPackageToTable(packageName, bundleType) {
@@ -480,8 +820,449 @@
             }
         }
 
+        // File upload functionality
+        function initializeUpload() {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('file-input');
+
+            // Drag & drop handlers
+            uploadArea.addEventListener('dragenter', handleDragEnter);
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            uploadArea.addEventListener('click', () => fileInput.click());
+
+            // File input handler
+            fileInput.addEventListener('change', handleFileSelect);
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('upload-area').classList.add('drag-active');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+                document.getElementById('upload-area').classList.remove('drag-active');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('upload-area').classList.remove('drag-active');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processUploadedFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                processUploadedFile(files[0]);
+            }
+        }
+
+        function processUploadedFile(file) {
+            // Validate file type
+            const validExtensions = ['.pem', '.crt', '.cer', '.p7b', '.p7c'];
+            const fileName = file.name.toLowerCase();
+            const isValid = validExtensions.some(ext => fileName.endsWith(ext));
+
+            if (!isValid) {
+                alert('Please upload a valid certificate file (PEM, CRT, CER, PKCS#7)');
+                return;
+            }
+
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size too large. Please upload a file smaller than 10MB.');
+                return;
+            }
+
+            uploadedFile = file;
+
+            // Read file content
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedFileContent = e.target.result;
+                displayCertificatePreview(uploadedFileContent);
+
+                // Auto-generate package name
+                const baseName = file.name.replace(/\.[^/.]+$/, '');
+                document.getElementById('upload-package-name').value = `custom-cert-${baseName}`;
+
+                // Show next button
+                document.getElementById('nextBtn').classList.remove('hidden');
+            };
+            reader.readAsText(file);
+        }
+
+        function displayCertificatePreview(content) {
+            const preview = document.getElementById('certificate-preview');
+            const lineNumbers = document.getElementById('line-numbers');
+            const contentDiv = document.getElementById('certificate-content');
+
+            // Show preview
+            preview.classList.remove('hidden');
+
+            // Generate line numbers
+            const lines = content.split('\n');
+            lineNumbers.innerHTML = lines.map((_, i) => `<div>${i + 1}</div>`).join('');
+
+            // Display content
+            contentDiv.innerHTML = lines.map(line => `<div>${line}</div>`).join('');
+        }
+
+        // Update proceedNext to handle upload flow
+        const originalProceedNext = proceedNext;
+
+        function proceedNext() {
+            if (currentStep === 'upload' && uploadedFile) {
+                // Show package configuration for uploaded file
+                document.getElementById('step-upload').classList.add('hidden');
+                document.getElementById('step-details').classList.remove('hidden');
+                document.getElementById('nextBtn').innerHTML = 'Create Package <i data-lucide="arrow-right" class="lucide"></i>';
+                lucide.createIcons();
+                currentStep = 'details';
+
+                // Set package name and bundle info for uploaded file
+                const packageNameInput = document.getElementById('packageNameInput');
+                const bundleInfo = document.getElementById('selected-bundle-info');
+
+                packageNameInput.value = document.getElementById('upload-package-name').value;
+                bundleInfo.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                            <i data-lucide="file-text" class="lucide text-chainguard-teal" style="width: 1.5rem; height: 1.5rem;"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-white mb-2">Uploaded Certificate</h4>
+                            <p class="text-sm text-gray-300 mb-3">Custom certificate bundle uploaded from file</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><span class="text-gray-400">File:</span><div class="text-white">${uploadedFile.name}</div></div>
+                                <div><span class="text-gray-400">Size:</span><div class="text-white">${(uploadedFile.size / 1024).toFixed(1)} KB</div></div>
+                                <div><span class="text-gray-400">Type:</span><div class="text-white">Custom Upload</div></div>
+                                <div><span class="text-gray-400">Format:</span><div class="text-white">${uploadedFile.name.split('.').pop().toUpperCase()}</div></div>
+                            </div>
+                            <div class="mt-4 p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
+                                <p class="text-sm text-yellow-400">⚠️ This is a custom upload. You'll need to manually update this package when certificates change.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            } else {
+                originalProceedNext();
+            }
+        }
+
+        // View/Edit/Delete functionality
+        function viewCertificate(certId) {
+            console.log('Viewing certificate:', certId);
+            currentViewingCert = certId;
+            isEditMode = false;
+
+            const cert = certificateData[certId];
+            if (!cert) {
+                console.error('Certificate not found:', certId);
+                return;
+            }
+
+            // Open panel and set to view mode
+            document.getElementById('panelOverlay').classList.remove('hidden');
+
+            // Hide all steps
+            document.getElementById('step-selection').classList.add('hidden');
+            document.getElementById('step-suggestions').classList.add('hidden');
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('step-details').classList.remove('hidden');
+
+            // Update header for view mode
+            const header = document.querySelector('#panelOverlay h2');
+            header.textContent = 'View Certificate Package';
+
+            // Populate certificate information
+            const packageNameInput = document.getElementById('packageNameInput');
+            const bundleInfo = document.getElementById('selected-bundle-info');
+
+            packageNameInput.value = cert.packageName;
+            packageNameInput.disabled = true; // Start in view mode
+
+            // Create view content based on certificate type
+            bundleInfo.innerHTML = createCertificateViewContent(cert);
+
+            // Update footer buttons for view mode
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('nextBtn').innerHTML = 'Edit Package <i data-lucide="edit" class="lucide"></i>';
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('nextBtn').onclick = () => editCertificate(certId);
+
+            // Add delete button
+            if (!document.getElementById('deleteBtn')) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.id = 'deleteBtn';
+                deleteBtn.onclick = () => showDeleteDialog(certId);
+                deleteBtn.className = 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium flex items-center gap-2 transition-colors';
+                deleteBtn.innerHTML = '<i data-lucide="trash-2" class="lucide"></i>Delete';
+                document.querySelector('#panelOverlay .p-6.border-t .flex.gap-3').appendChild(deleteBtn);
+            }
+
+            lucide.createIcons();
+            currentStep = 'view';
+        }
+
+        function createCertificateViewContent(cert) {
+            const iconType = cert.type === 'custom' ? 'file-text' : (cert.source.includes('AWS') ? 'cloud' : cert.source.includes('Google') ? 'cloud' : cert.source.includes('DoD') ? 'building-2' : 'shield');
+            const iconColor = cert.type === 'custom' ? 'chainguard-teal' : (cert.source.includes('AWS') ? 'orange-400' : cert.source.includes('Google') ? 'purple-400' : 'blue-400');
+
+            return `
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                        <i data-lucide="${iconType}" class="lucide text-${iconColor}" style="width: 1.5rem; height: 1.5rem;"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-medium text-white mb-2">${cert.packageName}</h4>
+                        <p class="text-sm text-gray-300 mb-3">${cert.type === 'custom' ? 'Custom uploaded certificate' : cert.source + ' managed certificate'}</p>
+
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div><span class="text-gray-400">Common Name:</span><div class="text-white">${cert.commonName}</div></div>
+                            <div><span class="text-gray-400">Issuer:</span><div class="text-white">${cert.issuer}</div></div>
+                            <div><span class="text-gray-400">Expires:</span><div class="text-white">${cert.expiryDate}</div></div>
+                            <div><span class="text-gray-400">Last Updated:</span><div class="text-white">${cert.lastUpdated}</div></div>
+                        </div>
+
+                        ${cert.type === 'custom' ?
+                            `<div class="mt-4 p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
+                                <p class="text-sm text-yellow-400">⚠️ Custom upload - manual updates required</p>
+                            </div>` :
+                            `<div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-sm text-chainguard-teal">✓ Auto-updating managed certificate</p>
+                            </div>`
+                        }
+
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-sm font-medium text-white">Certificate Content</h5>
+                                ${cert.sourceUrl ? `<a href="${cert.sourceUrl}" target="_blank" class="text-xs text-chainguard-teal hover:underline">Source: ${cert.source}</a>` : `<span class="text-xs text-gray-400">${cert.source}</span>`}
+                            </div>
+                            <div class="bg-chainguard-darker border border-gray-600 rounded-lg overflow-hidden">
+                                <div class="relative">
+                                    <div class="absolute left-2 top-2 text-xs text-gray-500 font-mono leading-5 text-right w-6 select-none">
+                                        ${cert.certificateContent.split('\n').map((_, i) => `<div>${i + 1}</div>`).join('')}
+                                    </div>
+                                    <div class="pl-10 pr-4 py-2 text-xs font-mono text-gray-300 leading-5 max-h-48 overflow-y-auto">
+                                        ${cert.certificateContent.split('\n').map(line => `<div>${line}</div>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function editCertificate(certId) {
+            console.log('Editing certificate:', certId);
+            isEditMode = true;
+
+            // Update header
+            const header = document.querySelector('#panelOverlay h2');
+            header.textContent = 'Edit Certificate Package';
+
+            // Enable package name editing
+            const packageNameInput = document.getElementById('packageNameInput');
+            packageNameInput.disabled = false;
+            packageNameInput.focus();
+
+            // Update footer buttons for edit mode
+            document.getElementById('nextBtn').innerHTML = 'Save Changes <i data-lucide="save" class="lucide"></i>';
+            document.getElementById('nextBtn').onclick = () => saveCertificateChanges(certId);
+
+            // Add cancel button
+            if (!document.getElementById('cancelBtn')) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.id = 'cancelBtn';
+                cancelBtn.onclick = () => viewCertificate(certId); // Return to view mode
+                cancelBtn.className = 'px-4 py-2 text-gray-300 hover:text-white transition-colors';
+                cancelBtn.innerHTML = 'Cancel';
+                document.querySelector('#panelOverlay .p-6.border-t .flex').insertBefore(cancelBtn, document.getElementById('nextBtn'));
+            }
+
+            lucide.createIcons();
+            currentStep = 'edit';
+        }
+
+        function saveCertificateChanges(certId) {
+            console.log('Saving changes for certificate:', certId);
+
+            const newPackageName = document.getElementById('packageNameInput').value.trim();
+
+            // Validate package name
+            if (!newPackageName) {
+                alert('Package name is required');
+                return;
+            }
+
+            // Update certificate data
+            if (certificateData[certId]) {
+                certificateData[certId].packageName = newPackageName;
+                certificateData[certId].lastUpdated = 'Just now';
+            }
+
+            // Update table row
+            const tableRow = document.querySelector(`[data-cert-id="${certId}"]`);
+            if (tableRow) {
+                const nameCell = tableRow.querySelector('.text-chainguard-teal');
+                nameCell.textContent = newPackageName;
+                const updatedCell = tableRow.querySelector('.text-right');
+                updatedCell.textContent = 'Just now';
+            }
+
+            // Show success notification
+            showNotification('Certificate package updated successfully!', 'success');
+
+            // Return to view mode
+            viewCertificate(certId);
+        }
+
+        function showDeleteDialog(certId) {
+            console.log('Showing delete dialog for:', certId);
+            certificateToDelete = certId;
+
+            const cert = certificateData[certId];
+            document.getElementById('delete-cert-name').textContent = cert.packageName;
+            document.getElementById('deleteDialog').classList.remove('hidden');
+        }
+
+        function cancelDelete() {
+            console.log('Cancelling delete');
+            document.getElementById('deleteDialog').classList.add('hidden');
+            certificateToDelete = null;
+        }
+
+        function confirmDelete() {
+            console.log('Confirming delete for:', certificateToDelete);
+
+            if (certificateToDelete) {
+                // Remove from data
+                delete certificateData[certificateToDelete];
+
+                // Remove from table
+                const tableRow = document.querySelector(`[data-cert-id="${certificateToDelete}"]`);
+                if (tableRow) {
+                    // Handle bundle deletion
+                    if (tableRow.closest('.expandable-bundle')) {
+                        tableRow.closest('.expandable-bundle').remove();
+                    } else {
+                        tableRow.remove();
+                    }
+                }
+
+                // Close dialogs
+                document.getElementById('deleteDialog').classList.add('hidden');
+                document.getElementById('panelOverlay').classList.add('hidden');
+
+                // Show success notification
+                showNotification('Certificate package deleted successfully!', 'success');
+
+                // Reset state
+                certificateToDelete = null;
+                currentViewingCert = null;
+                resetToSelection();
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `fixed top-4 right-4 z-40 px-4 py-3 rounded-lg ${
+                type === 'success' ? 'bg-green-500/20 border border-green-500/40 text-green-400' :
+                type === 'error' ? 'bg-red-500/20 border border-red-500/40 text-red-400' :
+                'bg-blue-500/20 border border-blue-500/40 text-blue-400'
+            }`;
+            notification.classList.remove('hidden');
+
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Update addPackageToTable to include certificate data
+        function addPackageToTable(packageName, bundleType) {
+            const tableBody = document.getElementById('packagesTable');
+            const newRow = document.createElement('div');
+            newRow.className = 'certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer';
+
+            let commonName, issuer, expiry, certId;
+            if (bundleType === 'aws-pca') {
+                commonName = '*.amazonaws.com CA';
+                issuer = 'Amazon Root CA';
+                expiry = 'Dec 31, 2030';
+                certId = 'new-aws-' + Date.now();
+            } else if (bundleType === 'gcp-ca') {
+                commonName = '*.googleapis.com CA';
+                issuer = 'Google Trust Services';
+                expiry = 'Jan 15, 2029';
+                certId = 'new-gcp-' + Date.now();
+            } else if (bundleType === 'dod-eca') {
+                commonName = '*.dod.mil CA';
+                issuer = 'DoD Root CA';
+                expiry = 'Jan 15, 2028';
+                certId = 'new-dod-' + Date.now();
+            } else {
+                // Custom upload
+                commonName = uploadedFile ? `*.${uploadedFile.name.split('.')[0]}.local` : '*.custom.local';
+                issuer = 'Custom Root CA';
+                expiry = 'Dec 31, 2025';
+                certId = 'custom-' + Date.now();
+            }
+
+            // Add to certificate database
+            certificateData[certId] = {
+                type: bundleType ? 'curated' : 'custom',
+                packageName: packageName,
+                commonName: commonName,
+                issuer: issuer,
+                expiryDate: expiry,
+                lastUpdated: 'Just now',
+                source: bundleType ? (bundleType === 'aws-pca' ? 'AWS Private CA' : bundleType === 'gcp-ca' ? 'Google Cloud' : 'DoD PKI') : 'Custom Upload',
+                sourceUrl: bundleType ? (bundleType === 'aws-pca' ? 'https://docs.aws.amazon.com/privateca/' : bundleType === 'gcp-ca' ? 'https://cloud.google.com/security/products/certificate-authority-service' : 'https://www.cyber.mil/pki-pke/tools-configuration-files/') : null,
+                fileName: uploadedFile ? uploadedFile.name : null,
+                certificateContent: uploadedFileContent || '-----BEGIN CERTIFICATE-----\n[Certificate content would be displayed here]\n-----END CERTIFICATE-----'
+            };
+
+            newRow.setAttribute('data-cert-type', certificateData[certId].type);
+            newRow.setAttribute('data-cert-id', certId);
+            newRow.onclick = () => viewCertificate(certId);
+
+            newRow.innerHTML = `
+                <div class="px-2 py-2">
+                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                        <div class="text-chainguard-teal font-medium" style="width: 238px;">${packageName}</div>
+                        <div class="text-white" style="width: 209px;">${commonName}</div>
+                        <div class="text-white" style="width: 159px;">${issuer}</div>
+                        <div class="text-white" style="width: 132px;">${expiry}</div>
+                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">Just now</div>
+                    </div>
+                </div>
+            `;
+            tableBody.insertBefore(newRow, tableBody.firstChild);
+        }
+
         // Initialize
         document.getElementById('createPackageBtn').addEventListener('click', openPanel);
+        initializeUpload();
     </script>
 </body>
 </html>
