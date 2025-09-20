@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainguard Custom Packages - Certificate Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'chainguard-dark': '#14003D',
+                        'chainguard-darker': '#110033',
+                        'chainguard-teal': '#7AF0FE',
+                        'chainguard-text-secondary': '#c5c5c5',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #110033;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .lucide { width: 1rem; height: 1rem; }
+        .lucide-lg { width: 1.25rem; height: 1.25rem; }
+        .text-chainguard-text-secondary { color: #c5c5c5; }
+        .border-chainguard-teal { border-color: #7AF0FE; }
+        .bg-chainguard-teal { background-color: #7AF0FE; }
+        .text-chainguard-teal { color: #7AF0FE; }
+        .bg-chainguard-dark { background-color: #14003D; }
+        .bg-chainguard-darker { background-color: #110033; }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="flex min-h-screen">
+        <!-- Navigation -->
+        <nav class="w-72 h-screen p-6 border-r border-gray-700" style="background-color: #14003D;">
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-6 h-6 bg-chainguard-teal rounded"></div>
+                    <span class="text-white font-bold text-lg">chainguard</span>
+                </div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center">
+                        <i data-lucide="user" class="lucide text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-2 bg-gray-700/30 rounded-full px-3 py-1">
+                        <span class="text-chainguard-teal text-sm font-medium">cloud-services.com</span>
+                        <i data-lucide="chevron-down" class="lucide text-chainguard-teal" style="width: 12px; height: 12px;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="space-y-1">
+                <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                    <i data-lucide="layout-grid" class="lucide-lg"></i>Overview</a></li>
+                <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                    <i data-lucide="trending-up" class="lucide-lg"></i>Reports</a></li>
+                <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                    <i data-lucide="package" class="lucide-lg"></i>Images</a></li>
+                <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium bg-white/16 text-white">
+                    <i data-lucide="settings" class="lucide-lg"></i>Custom Packages</a></li>
+                <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                    <i data-lucide="package-2" class="lucide-lg"></i>Helm charts</a></li>
+            </ul>
+
+            <div class="absolute bottom-6 left-6 right-6 border-t border-gray-700 pt-4">
+                <ul class="space-y-1">
+                    <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                        <i data-lucide="settings" class="lucide-lg"></i>Settings</a></li>
+                    <li><a href="#" class="flex items-center gap-3 px-3 py-2 rounded text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                        <i data-lucide="info" class="lucide-lg"></i>Docs & support</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-white mb-2" style="font-size: 24px; letter-spacing: -0.72px;">Custom Packages</h1>
+                <p class="text-white text-base">
+                    Create and manage certificate packages for your container images.
+                    <span class="text-chainguard-teal cursor-pointer hover:underline">Learn more</span>
+                </p>
+            </div>
+
+            <div class="flex items-center justify-between mb-6">
+                <div class="relative w-96">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="lucide text-gray-400"></i>
+                    </div>
+                    <input type="text" placeholder="Filter..." class="w-full pl-10 pr-4 py-2 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-sm">
+                </div>
+                <button id="createPackageBtn" class="border border-chainguard-teal text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-chainguard-teal hover:text-black transition-colors">
+                    Create New Custom Package
+                </button>
+            </div>
+
+            <!-- Existing Packages Table -->
+            <div class="bg-chainguard-darker/50 rounded-lg border border-gray-700 overflow-hidden">
+                <div class="border-b border-gray-700 px-2 py-3">
+                    <div class="grid grid-cols-5 gap-4 text-sm font-semibold text-white px-2">
+                        <div class="text-left" style="width: 238px;">Package name</div>
+                        <div class="text-left" style="width: 209px;">Common name</div>
+                        <div class="text-left" style="width: 159px;">Issuer</div>
+                        <div class="text-left" style="width: 132px;">Expires on</div>
+                        <div class="text-right" style="width: 98px;">Updated</div>
+                    </div>
+                </div>
+
+                <div class="divide-y divide-gray-700" id="packagesTable">
+                    <div class="hover:bg-gray-800/30 transition-colors cursor-pointer">
+                        <div class="px-2 py-2">
+                            <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                <div class="text-chainguard-teal font-medium" style="width: 238px;">custom-cert-aws-internal-key</div>
+                                <div class="text-white" style="width: 209px;">*.cloud-services.com CA</div>
+                                <div class="text-white" style="width: 159px;">Cloud Services Root CA</div>
+                                <div class="text-white" style="width: 132px;">May 30, 2027</div>
+                                <div class="text-chainguard-text-secondary text-right" style="width: 98px;">36 minutes ago</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="expandable-bundle">
+                        <div class="hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
+                            <div class="px-2 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow"></i>
+                                        <i data-lucide="folder" class="lucide text-chainguard-teal"></i>
+                                        <span class="text-chainguard-teal font-medium">custom-cert-aws-internal-bundle (3)</span>
+                                    </div>
+                                    <div class="text-chainguard-text-secondary text-sm">36 minutes ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bundle-content hidden pl-8 bg-gray-800/20">
+                            <div class="divide-y divide-gray-700/50">
+                                <div class="px-2 py-2">
+                                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                        <div class="text-gray-400 text-sm" style="width: 238px;">Certificate</div>
+                                        <div class="text-white" style="width: 209px;">Cloud Serve DMZ Issuing CA1</div>
+                                        <div class="text-white" style="width: 159px;">AWS Root CA</div>
+                                        <div class="text-white" style="width: 132px;">May 30, 2027</div>
+                                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">36 minutes ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Side Panel -->
+    <div id="panelOverlay" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="closePanel()"></div>
+        <div class="absolute right-0 top-0 h-full w-[600px] shadow-xl" style="background-color: #14003D; border-left: 1px solid rgb(75 85 99);">
+            <div class="flex flex-col h-full">
+                <div class="flex items-center justify-between p-6 border-b border-gray-700">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Create Custom Package</h2>
+                        <p class="text-sm text-gray-300 mt-1">Add certificate bundles to create a new custom package</p>
+                    </div>
+                    <button onclick="closePanel()" class="p-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-white transition-colors">
+                        <i data-lucide="x" class="lucide"></i>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-6">
+                    <!-- Step 1: Selection -->
+                    <div id="step-selection">
+                        <h3 class="text-lg font-semibold text-white mb-4">Choose how to create your package</h3>
+                        <div class="space-y-4">
+                            <button onclick="showSuggestions()" class="w-full p-6 text-left rounded-lg border border-gray-600 hover:border-chainguard-teal hover:bg-chainguard-teal/5 transition-all group" style="background-color: rgba(17, 0, 51, 0.5);">
+                                <h4 class="text-white font-medium mb-2 group-hover:text-chainguard-teal">Browse Chainguard Suggestions</h4>
+                                <p class="text-sm text-gray-300">Create packages from popular, auto-updating certificate bundles managed by Chainguard</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Suggestions -->
+                    <div id="step-suggestions" class="hidden">
+                        <h3 class="text-lg font-semibold text-white mb-2">Chainguard Suggestions</h3>
+                        <p class="text-sm text-gray-300 mb-6">Popular certificate bundles maintained by Chainguard.</p>
+
+                        <div class="grid gap-3" id="certificateOptions">
+                            <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="dod-eca" onclick="selectBundle('dod-eca', this)">
+                                <h4 class="font-medium text-white text-sm mb-2">DoD PKCS#7 for ECA PKI Only</h4>
+                                <p class="text-xs text-gray-400 mb-2">v5.12 • 12 certificates</p>
+                                <p class="text-sm text-gray-300">US Department of Defense Enterprise Certificate Authority</p>
+                            </div>
+
+                            <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="dod-wcf" onclick="selectBundle('dod-wcf', this)">
+                                <h4 class="font-medium text-white text-sm mb-2">DoD PKI CA Certificate Bundles: PKCS#7 for WCF B&I PKI</h4>
+                                <p class="text-xs text-gray-400 mb-2">v5.17 • 8 certificates</p>
+                                <p class="text-sm text-gray-300">DoD Web Communications Framework</p>
+                            </div>
+
+                            <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="icp-brazil" onclick="selectBundle('icp-brazil', this)">
+                                <h4 class="font-medium text-white text-sm mb-2">PKI ICP Brazil</h4>
+                                <p class="text-xs text-gray-400 mb-2">v2024.1 • 24 certificates</p>
+                                <p class="text-sm text-gray-300">Brazilian Public Key Infrastructure</p>
+                            </div>
+
+                            <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="aws-pca" onclick="selectBundle('aws-pca', this)">
+                                <h4 class="font-medium text-white text-sm mb-2">AWS Private CA Bundle</h4>
+                                <p class="text-xs text-gray-400 mb-2">vLatest • 6 certificates</p>
+                                <p class="text-sm text-gray-300">Amazon Web Services Private Certificate Authority</p>
+                            </div>
+
+                            <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="gcp-ca" onclick="selectBundle('gcp-ca', this)">
+                                <h4 class="font-medium text-white text-sm mb-2">Google Cloud Certificate Authority Service</h4>
+                                <p class="text-xs text-gray-400 mb-2">vLatest • 4 certificates</p>
+                                <p class="text-sm text-gray-300">Google Cloud Platform managed certificate authorities</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Package Configuration -->
+                    <div id="step-details" class="hidden">
+                        <h3 class="text-lg font-semibold text-white mb-2">Configure Package</h3>
+                        <p class="text-sm text-gray-300 mb-6">Name your package and review the selected certificate bundle</p>
+
+                        <div id="selected-bundle-info" class="bg-chainguard-darker/50 border border-gray-600 rounded-lg p-4 mb-6">
+                            <!-- Bundle info will be populated here -->
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-white">Package name</label>
+                            <input id="packageNameInput" type="text" class="w-full px-3 py-2 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-sm">
+                            <p class="text-xs text-gray-400">Package name can only contain ASCII letters, digits, and the characters ., -, and _.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 border-t border-gray-700">
+                    <div class="flex justify-between">
+                        <button id="backBtn" onclick="goBack()" class="hidden flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white transition-colors">
+                            <i data-lucide="arrow-left" class="lucide"></i>Back
+                        </button>
+                        <button id="nextBtn" onclick="proceedNext()" class="hidden bg-chainguard-teal hover:bg-opacity-90 text-black px-6 py-2 rounded-md font-medium flex items-center gap-2 transition-colors">
+                            Next <i data-lucide="arrow-right" class="lucide"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="fixed top-4 right-4 z-40 bg-green-500/20 border border-green-500/40 text-green-400 px-4 py-3 rounded-lg hidden">
+        Custom package created successfully!
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        let selectedBundle = null;
+        let currentStep = 'selection';
+
+        function openPanel() {
+            console.log('Opening panel...');
+            document.getElementById('panelOverlay').classList.remove('hidden');
+        }
+
+        function closePanel() {
+            console.log('Closing panel...');
+            document.getElementById('panelOverlay').classList.add('hidden');
+            resetToSelection();
+        }
+
+        function showSuggestions() {
+            console.log('Showing suggestions...');
+            document.getElementById('step-selection').classList.add('hidden');
+            document.getElementById('step-suggestions').classList.remove('hidden');
+            document.getElementById('backBtn').classList.remove('hidden');
+            currentStep = 'suggestions';
+        }
+
+        function selectBundle(bundleId, element) {
+            console.log('Selected bundle:', bundleId);
+            selectedBundle = bundleId;
+
+            // Reset all options
+            document.querySelectorAll('.certificate-option').forEach(opt => {
+                opt.classList.remove('border-chainguard-teal', 'bg-chainguard-teal/5');
+                opt.classList.add('border-gray-600');
+            });
+
+            // Select this option
+            element.classList.remove('border-gray-600');
+            element.classList.add('border-chainguard-teal', 'bg-chainguard-teal/5');
+
+            // Show next button
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function proceedNext() {
+            console.log('Proceeding to next step, current:', currentStep, 'selected:', selectedBundle);
+
+            if (currentStep === 'suggestions' && selectedBundle) {
+                // Show package configuration
+                document.getElementById('step-suggestions').classList.add('hidden');
+                document.getElementById('step-details').classList.remove('hidden');
+                document.getElementById('nextBtn').innerHTML = 'Create Package <i data-lucide="arrow-right" class="lucide"></i>';
+                lucide.createIcons();
+                currentStep = 'details';
+
+                // Set package name and bundle info
+                const packageNameInput = document.getElementById('packageNameInput');
+                const bundleInfo = document.getElementById('selected-bundle-info');
+
+                if (selectedBundle === 'aws-pca') {
+                    console.log('Showing AWS bundle info');
+                    packageNameInput.value = 'aws-private-ca-package';
+                    bundleInfo.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                                <i data-lucide="cloud" class="lucide text-orange-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-white mb-2">AWS Private CA Bundle</h4>
+                                <p class="text-sm text-gray-300 mb-3">Amazon Web Services Private Certificate Authority trusted roots</p>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">Latest</div></div>
+                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">6</div></div>
+                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">Amazon Web Services</div></div>
+                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Sep 10, 2024</div></div>
+                                </div>
+                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (selectedBundle === 'gcp-ca') {
+                    console.log('Showing GCP bundle info');
+                    packageNameInput.value = 'gcp-ca-service-package';
+                    bundleInfo.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                                <i data-lucide="cloud" class="lucide text-purple-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-white mb-2">Google Cloud Certificate Authority Service</h4>
+                                <p class="text-sm text-gray-300 mb-3">Google Cloud Platform managed certificate authorities</p>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">Latest</div></div>
+                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">4</div></div>
+                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">Google Cloud</div></div>
+                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Sep 5, 2024</div></div>
+                                </div>
+                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (selectedBundle === 'dod-eca') {
+                    console.log('Showing DoD ECA bundle info');
+                    packageNameInput.value = 'dod-eca-pki-package';
+                    bundleInfo.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                                <i data-lucide="building-2" class="lucide text-blue-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-white mb-2">DoD PKCS#7 for ECA PKI Only</h4>
+                                <p class="text-sm text-gray-300 mb-3">US Department of Defense Enterprise Certificate Authority</p>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">5.12</div></div>
+                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">12</div></div>
+                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">US Department of Defense</div></div>
+                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Aug 15, 2024</div></div>
+                                </div>
+                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                lucide.createIcons();
+            } else if (currentStep === 'details') {
+                // Create package
+                const packageName = document.getElementById('packageNameInput').value;
+                console.log('Creating package:', packageName);
+
+                // Show notification
+                document.getElementById('notification').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('notification').classList.add('hidden');
+                }, 5000);
+
+                // Add to table
+                addPackageToTable(packageName, selectedBundle);
+                closePanel();
+            }
+        }
+
+        function goBack() {
+            if (currentStep === 'details') {
+                document.getElementById('step-details').classList.add('hidden');
+                document.getElementById('step-suggestions').classList.remove('hidden');
+                document.getElementById('nextBtn').innerHTML = 'Next <i data-lucide="arrow-right" class="lucide"></i>';
+                lucide.createIcons();
+                currentStep = 'suggestions';
+            } else if (currentStep === 'suggestions') {
+                resetToSelection();
+            }
+        }
+
+        function resetToSelection() {
+            document.getElementById('step-details').classList.add('hidden');
+            document.getElementById('step-suggestions').classList.add('hidden');
+            document.getElementById('step-selection').classList.remove('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+
+            // Reset selections
+            document.querySelectorAll('.certificate-option').forEach(opt => {
+                opt.classList.remove('border-chainguard-teal', 'bg-chainguard-teal/5');
+                opt.classList.add('border-gray-600');
+            });
+
+            selectedBundle = null;
+            currentStep = 'selection';
+        }
+
+        function addPackageToTable(packageName, bundleType) {
+            const tableBody = document.getElementById('packagesTable');
+            const newRow = document.createElement('div');
+            newRow.className = 'hover:bg-gray-800/30 transition-colors cursor-pointer';
+
+            let commonName, issuer, expiry;
+            if (bundleType === 'aws-pca') {
+                commonName = '*.amazonaws.com CA';
+                issuer = 'Amazon Root CA';
+                expiry = 'Dec 31, 2030';
+            } else if (bundleType === 'gcp-ca') {
+                commonName = '*.googleapis.com CA';
+                issuer = 'Google Trust Services';
+                expiry = 'Jan 15, 2029';
+            } else if (bundleType === 'dod-eca') {
+                commonName = '*.dod.mil CA';
+                issuer = 'DoD Root CA';
+                expiry = 'Jan 15, 2028';
+            }
+
+            newRow.innerHTML = `
+                <div class="px-2 py-2">
+                    <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                        <div class="text-chainguard-teal font-medium" style="width: 238px;">${packageName}</div>
+                        <div class="text-white" style="width: 209px;">${commonName}</div>
+                        <div class="text-white" style="width: 159px;">${issuer}</div>
+                        <div class="text-white" style="width: 132px;">${expiry}</div>
+                        <div class="text-chainguard-text-secondary text-right" style="width: 98px;">Just now</div>
+                    </div>
+                </div>
+            `;
+            tableBody.insertBefore(newRow, tableBody.firstChild);
+        }
+
+        function toggleBundle(element) {
+            const bundleContent = element.parentElement.querySelector('.bundle-content');
+            const arrow = element.querySelector('.bundle-arrow');
+
+            if (bundleContent.classList.contains('hidden')) {
+                bundleContent.classList.remove('hidden');
+                arrow.style.transform = 'rotate(90deg)';
+            } else {
+                bundleContent.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Initialize
+        document.getElementById('createPackageBtn').addEventListener('click', openPanel);
+    </script>
+</body>
+</html>
