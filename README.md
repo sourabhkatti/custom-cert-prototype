@@ -60,10 +60,13 @@ The project includes comprehensive Playwright tests for workflow validation:
 npm install
 
 # Run all tests
-npm test
+npm run test:e2e
 
-# Run tests in headed mode (visible browser)
-npm run test:headed
+# Run tests with interactive UI
+npm run test:e2e:ui
+
+# View test reports
+npm run test:e2e:report
 ```
 
 **Test Coverage:**
