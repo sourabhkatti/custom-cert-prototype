@@ -1196,14 +1196,13 @@ HS567890abcdefghijklmnopqrstuvwxyz
             // Show preview
             preview.classList.remove('hidden');
 
-            // Format content as continuous stream for better copy-paste
-            const cleanContent = content.replace(/\n/g, '').replace(/(.{64})/g, '$1\n');
-            const lines = cleanContent.split('\n');
+            // Preserve original PEM formatting for proper certificate display
+            const lines = content.split('\n');
 
             // Generate line numbers
             lineNumbers.innerHTML = lines.map((_, i) => `<div class="leading-tight">${i + 1}</div>`).join('');
 
-            // Display content without extra spacing for easy copy-paste
+            // Display content preserving original PEM structure
             contentDiv.innerHTML = lines.map(line => `<div class="leading-tight break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`).join('');
         }
 
@@ -1501,7 +1500,7 @@ HS567890abcdefghijklmnopqrstuvwxyz
                                     ${cert.certificateContent.split('\n').map((_, i) => `<div class="leading-tight">${i + 1}</div>`).join('')}
                                 </div>
                                 <div class="pl-8 pr-2 py-1 text-xs font-mono text-gray-300 leading-tight max-h-40 overflow-y-auto">
-                                    ${cert.certificateContent.replace(/\n/g, '').replace(/(.{64})/g, '$1\n').split('\n').map(line => `<div class="leading-tight break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`).join('')}
+                                    ${cert.certificateContent.split('\n').map(line => `<div class="leading-tight break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`).join('')}
                                 </div>
                             </div>
                         </div>
