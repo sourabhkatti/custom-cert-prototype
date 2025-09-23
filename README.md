@@ -56,8 +56,11 @@ certs-prototype/
 The project includes comprehensive Playwright tests for workflow validation:
 
 ```bash
-# Install dependencies
+# Install dependencies (may require fixing npm cache permissions first)
 npm install
+
+# Install Playwright browsers
+npx playwright install
 
 # Run all tests
 npm run test:e2e
@@ -67,6 +70,11 @@ npm run test:e2e:ui
 
 # View test reports
 npm run test:e2e:report
+```
+
+**Note**: If you encounter npm permission errors, you may need to fix npm cache ownership first:
+```bash
+sudo chown -R $(whoami) ~/.npm
 ```
 
 **Test Coverage:**

@@ -355,86 +355,86 @@
                 <div class="flex-1 overflow-y-auto p-6">
                     <!-- Step 1: Selection -->
                     <div id="step-selection">
-                        <h3 class="text-lg font-semibold text-white mb-4">Choose how to create your package</h3>
+                        <h3 class="text-base font-semibold text-white mb-3">Choose how to create your package</h3>
                         <div class="space-y-4">
                             <button onclick="showUpload()" class="w-full p-6 text-left rounded-lg border border-gray-600 hover:border-chainguard-teal hover:bg-chainguard-teal/5 transition-all group" style="background-color: rgba(17, 0, 51, 0.5);">
-                                <h4 class="text-white font-medium mb-2 group-hover:text-chainguard-teal">Upload Certificate Bundle</h4>
-                                <p class="text-sm text-gray-300">Create a custom package by uploading your own certificate files in PEM or PKCS#7 format</p>
+                                <h4 class="text-sm font-medium text-white mb-1 group-hover:text-chainguard-teal">Upload Certificate Bundle</h4>
+                                <p class="text-xs text-gray-300">Create a custom package by uploading your own certificate files in PEM or PKCS#7 format</p>
                             </button>
                             <button onclick="showSuggestions()" class="w-full p-6 text-left rounded-lg border border-gray-600 hover:border-chainguard-teal hover:bg-chainguard-teal/5 transition-all group" style="background-color: rgba(17, 0, 51, 0.5);">
-                                <h4 class="text-white font-medium mb-2 group-hover:text-chainguard-teal">Browse Chainguard Suggestions</h4>
-                                <p class="text-sm text-gray-300">Create packages from popular, auto-updating certificate bundles managed by Chainguard</p>
+                                <h4 class="text-sm font-medium text-white mb-1 group-hover:text-chainguard-teal">Browse Chainguard Suggestions</h4>
+                                <p class="text-xs text-gray-300">Create packages from popular, auto-updating certificate bundles managed by Chainguard</p>
                             </button>
                         </div>
                     </div>
 
                     <!-- Step 2: Suggestions -->
                     <div id="step-suggestions" class="hidden">
-                        <h3 class="text-lg font-semibold text-white mb-2">Chainguard Suggestions</h3>
-                        <p class="text-sm text-gray-300 mb-6">Popular certificate bundles maintained by Chainguard.</p>
+                        <h3 class="text-base font-semibold text-white mb-2">Chainguard Suggestions</h3>
+                        <p class="text-xs text-gray-300 mb-4">Popular certificate bundles maintained by Chainguard.</p>
 
                         <div class="grid gap-3" id="certificateOptions">
                             <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="dod-eca" onclick="selectBundle('dod-eca', this)">
-                                <h4 class="font-medium text-white text-sm mb-2">DoD PKCS#7 for ECA PKI Only</h4>
-                                <p class="text-xs text-gray-400 mb-2">v5.12 • 12 certificates</p>
-                                <p class="text-sm text-gray-300">US Department of Defense Enterprise Certificate Authority</p>
+                                <h4 class="font-medium text-white text-xs mb-1">DoD PKCS#7 for ECA PKI Only</h4>
+                                <p class="text-xs text-gray-400 mb-1">v5.12 • 12 certificates</p>
+                                <p class="text-xs text-gray-300">US Department of Defense Enterprise Certificate Authority</p>
                             </div>
 
                             <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="dod-wcf" onclick="selectBundle('dod-wcf', this)">
-                                <h4 class="font-medium text-white text-sm mb-2">DoD PKI CA Certificate Bundles: PKCS#7 for WCF B&I PKI</h4>
-                                <p class="text-xs text-gray-400 mb-2">v5.17 • 8 certificates</p>
-                                <p class="text-sm text-gray-300">DoD Web Communications Framework</p>
+                                <h4 class="font-medium text-white text-xs mb-1">DoD PKI CA Certificate Bundles: PKCS#7 for WCF B&I PKI</h4>
+                                <p class="text-xs text-gray-400 mb-1">v5.17 • 8 certificates</p>
+                                <p class="text-xs text-gray-300">DoD Web Communications Framework</p>
                             </div>
 
                             <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="icp-brazil" onclick="selectBundle('icp-brazil', this)">
-                                <h4 class="font-medium text-white text-sm mb-2">PKI ICP Brazil</h4>
-                                <p class="text-xs text-gray-400 mb-2">v2024.1 • 24 certificates</p>
-                                <p class="text-sm text-gray-300">Brazilian Public Key Infrastructure</p>
+                                <h4 class="font-medium text-white text-xs mb-1">PKI ICP Brazil</h4>
+                                <p class="text-xs text-gray-400 mb-1">v2024.1 • 24 certificates</p>
+                                <p class="text-xs text-gray-300">Brazilian Public Key Infrastructure</p>
                             </div>
 
                             <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="aws-pca" onclick="selectBundle('aws-pca', this)">
-                                <h4 class="font-medium text-white text-sm mb-2">AWS Private CA Bundle</h4>
-                                <p class="text-xs text-gray-400 mb-2">vLatest • 6 certificates</p>
-                                <p class="text-sm text-gray-300">Amazon Web Services Private Certificate Authority</p>
+                                <h4 class="font-medium text-white text-xs mb-1">AWS Private CA Bundle</h4>
+                                <p class="text-xs text-gray-400 mb-1">vLatest • 6 certificates</p>
+                                <p class="text-xs text-gray-300">Amazon Web Services Private Certificate Authority</p>
                             </div>
 
                             <div class="certificate-option relative p-4 rounded-lg border border-gray-600 hover:border-gray-500 cursor-pointer transition-all" style="background-color: rgba(17, 0, 51, 0.5);" data-bundle-id="gcp-ca" onclick="selectBundle('gcp-ca', this)">
-                                <h4 class="font-medium text-white text-sm mb-2">Google Cloud Certificate Authority Service</h4>
-                                <p class="text-xs text-gray-400 mb-2">vLatest • 4 certificates</p>
-                                <p class="text-sm text-gray-300">Google Cloud Platform managed certificate authorities</p>
+                                <h4 class="font-medium text-white text-xs mb-1">Google Cloud Certificate Authority Service</h4>
+                                <p class="text-xs text-gray-400 mb-1">vLatest • 4 certificates</p>
+                                <p class="text-xs text-gray-300">Google Cloud Platform managed certificate authorities</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 2.5: Upload Certificate -->
                     <div id="step-upload" class="hidden">
-                        <h3 class="text-lg font-semibold text-white mb-2">Upload Certificate</h3>
-                        <p class="text-sm text-gray-300 mb-6">Upload your own certificate bundle in PEM or PKCS#7 format</p>
+                        <h3 class="text-base font-semibold text-white mb-2">Upload Certificate</h3>
+                        <p class="text-xs text-gray-300 mb-4">Upload your own certificate bundle in PEM or PKCS#7 format</p>
 
                         <div class="space-y-6">
                             <!-- Drag & Drop Area -->
                             <div id="upload-area" class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center cursor-pointer hover:border-gray-500 transition-colors" style="background-color: rgba(17, 0, 51, 0.3);">
                                 <input type="file" id="file-input" class="hidden" accept=".pem,.crt,.cer,.p7b,.p7c">
                                 <i data-lucide="upload" class="lucide text-gray-400 mx-auto mb-4" style="width: 2rem; height: 2rem;"></i>
-                                <h4 class="text-white font-medium mb-2">Drop certificate file here or click to browse</h4>
-                                <p class="text-sm text-gray-300">Supports PEM, CRT, CER, PKCS#7 formats</p>
+                                <h4 class="text-white font-medium text-sm mb-1">Drop certificate file here or click to browse</h4>
+                                <p class="text-xs text-gray-300">Supports PEM, CRT, CER, PKCS#7 formats</p>
                             </div>
 
                             <!-- Certificate Preview -->
                             <div id="certificate-preview" class="hidden">
-                                <h4 class="text-sm font-medium text-white mb-2">Certificate Content</h4>
-                                <div class="bg-chainguard-darker border border-gray-600 rounded-lg overflow-hidden min-h-[200px]">
-                                    <div class="relative h-full">
-                                        <div id="line-numbers" class="absolute left-2 top-2 text-xs text-gray-500 font-mono leading-5 text-right w-8 select-none z-10"></div>
-                                        <div id="certificate-content" class="pl-12 pr-4 py-2 text-xs font-mono text-gray-300 leading-relaxed max-h-48 min-h-[180px] overflow-y-auto"></div>
+                                <h4 class="text-xs font-medium text-white mb-2">Certificate Content</h4>
+                                <div class="bg-chainguard-darker border border-gray-600 rounded overflow-hidden">
+                                    <div class="relative">
+                                        <div id="line-numbers" class="absolute left-1 top-1 text-xs text-gray-500 font-mono leading-tight text-right w-6 select-none z-10"></div>
+                                        <div id="certificate-content" class="pl-8 pr-2 py-1 text-xs font-mono text-gray-300 leading-tight max-h-40 overflow-y-auto"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Package Name -->
-                            <div class="space-y-2">
-                                <label class="block text-sm font-medium text-white">Package name</label>
-                                <input id="upload-package-name" type="text" class="w-full px-3 py-2 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-sm">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-medium text-white">Package name</label>
+                                <input id="upload-package-name" type="text" class="w-full px-2 py-1.5 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-xs">
                                 <p class="text-xs text-gray-400">Package name can only contain ASCII letters, digits, and the characters ., -, and _.</p>
                             </div>
                         </div>
@@ -442,16 +442,16 @@
 
                     <!-- Step 3: Package Configuration -->
                     <div id="step-details" class="hidden">
-                        <h3 class="text-lg font-semibold text-white mb-2">Configure Package</h3>
-                        <p class="text-sm text-gray-300 mb-6">Name your package and review the selected certificate bundle</p>
+                        <h3 class="text-base font-semibold text-white mb-2">Configure Package</h3>
+                        <p class="text-xs text-gray-300 mb-4">Name your package and review the selected certificate bundle</p>
 
                         <div id="selected-bundle-info" class="bg-chainguard-darker/50 border border-gray-600 rounded-lg p-4 mb-6">
                             <!-- Bundle info will be populated here -->
                         </div>
 
-                        <div class="space-y-2">
-                            <label class="block text-sm font-medium text-white">Package name</label>
-                            <input id="packageNameInput" type="text" class="w-full px-3 py-2 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-sm">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-medium text-white">Package name</label>
+                            <input id="packageNameInput" type="text" class="w-full px-2 py-1.5 bg-chainguard-dark border border-gray-600 rounded text-white placeholder-gray-400 focus:border-chainguard-teal focus:outline-none text-xs">
                             <p class="text-xs text-gray-400">Package name can only contain ASCII letters, digits, and the characters ., -, and _.</p>
                         </div>
                     </div>
@@ -1196,12 +1196,15 @@ HS567890abcdefghijklmnopqrstuvwxyz
             // Show preview
             preview.classList.remove('hidden');
 
-            // Generate line numbers
-            const lines = content.split('\n');
-            lineNumbers.innerHTML = lines.map((_, i) => `<div class="py-0.5">${i + 1}</div>`).join('');
+            // Format content as continuous stream for better copy-paste
+            const cleanContent = content.replace(/\n/g, '').replace(/(.{64})/g, '$1\n');
+            const lines = cleanContent.split('\n');
 
-            // Display content with proper escaping and spacing
-            contentDiv.innerHTML = lines.map(line => `<div class="py-0.5 break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ /g, '&nbsp;')}</div>`).join('');
+            // Generate line numbers
+            lineNumbers.innerHTML = lines.map((_, i) => `<div class="leading-tight">${i + 1}</div>`).join('');
+
+            // Display content without extra spacing for easy copy-paste
+            contentDiv.innerHTML = lines.map(line => `<div class="leading-tight break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`).join('');
         }
 
         function proceedNext() {
@@ -1221,22 +1224,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
 
                 packageNameInput.value = document.getElementById('upload-package-name').value;
                 bundleInfo.innerHTML = `
-                    <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                            <i data-lucide="file-text" class="lucide text-chainguard-teal" style="width: 1.5rem; height: 1.5rem;"></i>
+                    <div class="w-full">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                <i data-lucide="file-text" class="lucide text-chainguard-teal" style="width: 0.875rem; height: 0.875rem;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-medium text-white">Uploaded Certificate</h4>
+                                <p class="text-xs text-gray-400">Custom certificate bundle uploaded from file</p>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-medium text-white mb-2">Uploaded Certificate</h4>
-                            <p class="text-sm text-gray-300 mb-3">Custom certificate bundle uploaded from file</p>
-                            <div class="grid grid-cols-2 gap-4 text-sm">
-                                <div><span class="text-gray-400">File:</span><div class="text-white">${uploadedFile.name}</div></div>
-                                <div><span class="text-gray-400">Size:</span><div class="text-white">${(uploadedFile.size / 1024).toFixed(1)} KB</div></div>
-                                <div><span class="text-gray-400">Type:</span><div class="text-white">Custom Upload</div></div>
-                                <div><span class="text-gray-400">Format:</span><div class="text-white">${uploadedFile.name.split('.').pop().toUpperCase()}</div></div>
-                            </div>
-                            <div class="mt-4 p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
-                                <p class="text-sm text-yellow-400">⚠️ This is a custom upload. You'll need to manually update this package when certificates change.</p>
-                            </div>
+                        <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                            <div><span class="text-gray-400">File:</span><div class="text-white text-xs break-all mt-1">${uploadedFile.name}</div></div>
+                            <div><span class="text-gray-400">Size:</span><div class="text-white text-xs mt-1">${(uploadedFile.size / 1024).toFixed(1)} KB</div></div>
+                            <div><span class="text-gray-400">Type:</span><div class="text-white text-xs mt-1">Custom Upload</div></div>
+                            <div><span class="text-gray-400">Format:</span><div class="text-white text-xs mt-1">${uploadedFile.name.split('.').pop().toUpperCase()}</div></div>
+                        </div>
+                        <div class="mt-2 p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
+                            <p class="text-xs text-yellow-400">⚠️ This is a custom upload. You'll need to manually update this package when certificates change.</p>
                         </div>
                     </div>
                 `;
@@ -1257,22 +1262,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
                     console.log('Showing AWS bundle info');
                     packageNameInput.value = 'aws-private-ca-package';
                     bundleInfo.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                                <i data-lucide="cloud" class="lucide text-orange-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                        <div class="w-full">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                    <i data-lucide="cloud" class="lucide text-orange-400" style="width: 0.875rem; height: 0.875rem;"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-white">AWS Private CA Bundle</h4>
+                                    <p class="text-xs text-gray-400">Amazon Web Services Private Certificate Authority trusted roots</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white mb-2">AWS Private CA Bundle</h4>
-                                <p class="text-sm text-gray-300 mb-3">Amazon Web Services Private Certificate Authority trusted roots</p>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">Latest</div></div>
-                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">6</div></div>
-                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">Amazon Web Services</div></div>
-                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Sep 10, 2024</div></div>
-                                </div>
-                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                                <div><span class="text-gray-400">Version:</span><div class="text-white text-xs font-mono mt-1">Latest</div></div>
+                                <div><span class="text-gray-400">Certificates:</span><div class="text-white text-xs mt-1">6</div></div>
+                                <div><span class="text-gray-400">Provider:</span><div class="text-white text-xs mt-1">Amazon Web Services</div></div>
+                                <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">Sep 10, 2024</div></div>
+                            </div>
+                            <div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-xs text-chainguard-teal">✓ Auto-updating certificate bundle</p>
                             </div>
                         </div>
                     `;
@@ -1280,22 +1287,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
                     console.log('Showing GCP bundle info');
                     packageNameInput.value = 'gcp-ca-service-package';
                     bundleInfo.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                                <i data-lucide="cloud" class="lucide text-purple-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                        <div class="w-full">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                    <i data-lucide="cloud" class="lucide text-purple-400" style="width: 0.875rem; height: 0.875rem;"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-white">Google Cloud Certificate Authority Service</h4>
+                                    <p class="text-xs text-gray-400">Google Cloud Platform managed certificate authorities</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white mb-2">Google Cloud Certificate Authority Service</h4>
-                                <p class="text-sm text-gray-300 mb-3">Google Cloud Platform managed certificate authorities</p>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">Latest</div></div>
-                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">4</div></div>
-                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">Google Cloud</div></div>
-                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Sep 5, 2024</div></div>
-                                </div>
-                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                                <div><span class="text-gray-400">Version:</span><div class="text-white text-xs font-mono mt-1">Latest</div></div>
+                                <div><span class="text-gray-400">Certificates:</span><div class="text-white text-xs mt-1">4</div></div>
+                                <div><span class="text-gray-400">Provider:</span><div class="text-white text-xs mt-1">Google Cloud</div></div>
+                                <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">Sep 5, 2024</div></div>
+                            </div>
+                            <div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-xs text-chainguard-teal">✓ Auto-updating certificate bundle</p>
                             </div>
                         </div>
                     `;
@@ -1303,22 +1312,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
                     console.log('Showing DoD ECA bundle info');
                     packageNameInput.value = 'dod-eca-pki-package';
                     bundleInfo.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                                <i data-lucide="building-2" class="lucide text-blue-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                        <div class="w-full">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                    <i data-lucide="building-2" class="lucide text-blue-400" style="width: 0.875rem; height: 0.875rem;"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-white">DoD PKCS#7 for ECA PKI Only</h4>
+                                    <p class="text-xs text-gray-400">US Department of Defense Enterprise Certificate Authority</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white mb-2">DoD PKCS#7 for ECA PKI Only</h4>
-                                <p class="text-sm text-gray-300 mb-3">US Department of Defense Enterprise Certificate Authority</p>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">5.12</div></div>
-                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">12</div></div>
-                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">US Department of Defense</div></div>
-                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Aug 15, 2024</div></div>
-                                </div>
-                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                                <div><span class="text-gray-400">Version:</span><div class="text-white text-xs font-mono mt-1">5.12</div></div>
+                                <div><span class="text-gray-400">Certificates:</span><div class="text-white text-xs mt-1">12</div></div>
+                                <div><span class="text-gray-400">Provider:</span><div class="text-white text-xs mt-1">US Department of Defense</div></div>
+                                <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">Aug 15, 2024</div></div>
+                            </div>
+                            <div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-xs text-chainguard-teal">✓ Auto-updating certificate bundle</p>
                             </div>
                         </div>
                     `;
@@ -1326,22 +1337,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
                     console.log('Showing DoD WCF bundle info');
                     packageNameInput.value = 'dod-wcf-pki-package';
                     bundleInfo.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                                <i data-lucide="building-2" class="lucide text-blue-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                        <div class="w-full">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                    <i data-lucide="building-2" class="lucide text-blue-400" style="width: 0.875rem; height: 0.875rem;"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-white">DoD PKI CA Certificate Bundles: PKCS#7 for WCF B&I PKI</h4>
+                                    <p class="text-xs text-gray-400">DoD Web Communications Framework for business and intelligence operations</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white mb-2">DoD PKI CA Certificate Bundles: PKCS#7 for WCF B&I PKI</h4>
-                                <p class="text-sm text-gray-300 mb-3">DoD Web Communications Framework for business and intelligence operations</p>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">5.17</div></div>
-                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">8</div></div>
-                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">US Department of Defense</div></div>
-                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Sep 1, 2024</div></div>
-                                </div>
-                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                                <div><span class="text-gray-400">Version:</span><div class="text-white text-xs font-mono mt-1">5.17</div></div>
+                                <div><span class="text-gray-400">Certificates:</span><div class="text-white text-xs mt-1">8</div></div>
+                                <div><span class="text-gray-400">Provider:</span><div class="text-white text-xs mt-1">US Department of Defense</div></div>
+                                <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">Sep 1, 2024</div></div>
+                            </div>
+                            <div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-xs text-chainguard-teal">✓ Auto-updating certificate bundle</p>
                             </div>
                         </div>
                     `;
@@ -1349,22 +1362,24 @@ HS567890abcdefghijklmnopqrstuvwxyz
                     console.log('Showing Brazilian PKI bundle info');
                     packageNameInput.value = 'icp-brazil-pki-package';
                     bundleInfo.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                                <i data-lucide="globe" class="lucide text-green-400" style="width: 1.5rem; height: 1.5rem;"></i>
+                        <div class="w-full">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                                    <i data-lucide="globe" class="lucide text-green-400" style="width: 0.875rem; height: 0.875rem;"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-medium text-white">PKI ICP Brazil</h4>
+                                    <p class="text-xs text-gray-400">Brazilian Public Key Infrastructure for government and enterprise use</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white mb-2">PKI ICP Brazil</h4>
-                                <p class="text-sm text-gray-300 mb-3">Brazilian Public Key Infrastructure for government and enterprise use</p>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div><span class="text-gray-400">Version:</span><div class="text-white font-mono">2024.1</div></div>
-                                    <div><span class="text-gray-400">Certificates:</span><div class="text-white">24</div></div>
-                                    <div><span class="text-gray-400">Provider:</span><div class="text-white">Brazilian Government</div></div>
-                                    <div><span class="text-gray-400">Last Updated:</span><div class="text-white">Jul 20, 2024</div></div>
-                                </div>
-                                <div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                    <p class="text-sm text-chainguard-teal">✓ Auto-updating certificate bundle</p>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                                <div><span class="text-gray-400">Version:</span><div class="text-white text-xs font-mono mt-1">2024.1</div></div>
+                                <div><span class="text-gray-400">Certificates:</span><div class="text-white text-xs mt-1">24</div></div>
+                                <div><span class="text-gray-400">Provider:</span><div class="text-white text-xs mt-1">Brazilian Government</div></div>
+                                <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">Jul 20, 2024</div></div>
+                            </div>
+                            <div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                                <p class="text-xs text-chainguard-teal">✓ Auto-updating certificate bundle</p>
                             </div>
                         </div>
                     `;
@@ -1448,43 +1463,45 @@ HS567890abcdefghijklmnopqrstuvwxyz
             const iconColor = cert.type === 'custom' ? 'chainguard-teal' : (cert.source.includes('AWS') ? 'orange-400' : cert.source.includes('Google') ? 'purple-400' : 'blue-400');
 
             return `
-                <div class="flex items-start gap-4">
-                    <div class="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                        <i data-lucide="${iconType}" class="lucide text-${iconColor}" style="width: 1.5rem; height: 1.5rem;"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-medium text-white mb-2">${cert.packageName}</h4>
-                        <p class="text-sm text-gray-300 mb-3">${cert.type === 'custom' ? 'Custom uploaded certificate' : cert.source + ' managed certificate'}</p>
-
-                        <div class="grid grid-cols-2 gap-4 text-sm">
-                            <div><span class="text-gray-400">Common Name:</span><div class="text-white">${cert.commonName}</div></div>
-                            <div><span class="text-gray-400">Issuer:</span><div class="text-white">${cert.issuer}</div></div>
-                            <div><span class="text-gray-400">Expires:</span><div class="text-white">${cert.expiryDate}</div></div>
-                            <div><span class="text-gray-400">Last Updated:</span><div class="text-white">${cert.lastUpdated}</div></div>
+                <div class="w-full">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="flex-shrink-0 p-1.5 rounded bg-white/5">
+                            <i data-lucide="${iconType}" class="lucide text-${iconColor}" style="width: 0.875rem; height: 0.875rem;"></i>
                         </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-white">${cert.packageName}</h4>
+                            <p class="text-xs text-gray-400">${cert.type === 'custom' ? 'Custom uploaded certificate' : cert.source + ' managed certificate'}</p>
+                        </div>
+                    </div>
 
-                        ${cert.type === 'custom' ?
-                            `<div class="mt-4 p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
-                                <p class="text-sm text-yellow-400">⚠️ Custom upload - manual updates required</p>
-                            </div>` :
-                            `<div class="mt-4 p-3 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
-                                <p class="text-sm text-chainguard-teal">✓ Auto-updating managed certificate</p>
-                            </div>`
-                        }
+                    <div class="grid grid-cols-2 gap-3 text-xs mb-3">
+                        <div><span class="text-gray-400">Common Name:</span><div class="text-white text-xs break-all mt-1">${cert.commonName}</div></div>
+                        <div><span class="text-gray-400">Issuer:</span><div class="text-white text-xs break-all mt-1">${cert.issuer}</div></div>
+                        <div><span class="text-gray-400">Expires:</span><div class="text-white text-xs mt-1">${cert.expiryDate}</div></div>
+                        <div><span class="text-gray-400">Last Updated:</span><div class="text-white text-xs mt-1">${cert.lastUpdated}</div></div>
+                    </div>
 
-                        <div class="mt-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <h5 class="text-sm font-medium text-white">Certificate Content</h5>
-                                ${cert.sourceUrl ? `<a href="${cert.sourceUrl}" target="_blank" class="text-xs text-chainguard-teal hover:underline">Source: ${cert.source}</a>` : `<span class="text-xs text-gray-400">${cert.source}</span>`}
-                            </div>
-                            <div class="bg-chainguard-darker border border-gray-600 rounded-lg overflow-hidden min-h-[200px]">
-                                <div class="relative h-full">
-                                    <div class="absolute left-2 top-2 text-xs text-gray-500 font-mono leading-5 text-right w-8 select-none z-10">
-                                        ${cert.certificateContent.split('\n').map((_, i) => `<div class="py-0.5">${i + 1}</div>`).join('')}
-                                    </div>
-                                    <div class="pl-12 pr-4 py-2 text-xs font-mono text-gray-300 leading-relaxed max-h-48 min-h-[180px] overflow-y-auto">
-                                        ${cert.certificateContent.split('\n').map(line => `<div class="py-0.5 break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ /g, '&nbsp;')}</div>`).join('')}
-                                    </div>
+                    ${cert.type === 'custom' ?
+                        `<div class="mt-2 p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
+                            <p class="text-xs text-yellow-400">⚠️ Custom upload - manual updates required</p>
+                        </div>` :
+                        `<div class="mt-2 p-2 rounded bg-chainguard-teal/10 border border-chainguard-teal/20">
+                            <p class="text-xs text-chainguard-teal">✓ Auto-updating managed certificate</p>
+                        </div>`
+                    }
+
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <h5 class="text-xs font-medium text-white">Certificate Content</h5>
+                            ${cert.sourceUrl ? `<a href="${cert.sourceUrl}" target="_blank" class="text-xs text-chainguard-teal hover:underline">Source: ${cert.source}</a>` : `<span class="text-xs text-gray-400">${cert.source}</span>`}
+                        </div>
+                        <div class="bg-chainguard-darker border border-gray-600 rounded overflow-hidden">
+                            <div class="relative">
+                                <div class="absolute left-1 top-1 text-xs text-gray-500 font-mono leading-tight text-right w-6 select-none z-10">
+                                    ${cert.certificateContent.split('\n').map((_, i) => `<div class="leading-tight">${i + 1}</div>`).join('')}
+                                </div>
+                                <div class="pl-8 pr-2 py-1 text-xs font-mono text-gray-300 leading-tight max-h-40 overflow-y-auto">
+                                    ${cert.certificateContent.replace(/\n/g, '').replace(/(.{64})/g, '$1\n').split('\n').map(line => `<div class="leading-tight break-all">${line.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`).join('')}
                                 </div>
                             </div>
                         </div>
