@@ -250,15 +250,18 @@
 
                     <!-- AWS Expandable Bundle -->
                     <div class="expandable-bundle">
-                        <div class="hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
+                        <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
                             <div class="px-2 py-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow"></i>
-                                        <i data-lucide="folder" class="lucide text-chainguard-teal"></i>
+                                <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                    <div class="flex items-center gap-2" style="width: 238px;">
+                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow" style="width: 12px; height: 12px;"></i>
+                                        <i data-lucide="folder" class="lucide text-chainguard-teal" style="width: 14px; height: 14px;"></i>
                                         <span class="text-chainguard-teal font-medium cursor-pointer" onclick="event.stopPropagation(); viewCertificate('aws-services-bundle');">acme-corp-aws-services (3)</span>
                                     </div>
-                                    <div class="text-chainguard-text-secondary text-sm">1 week ago</div>
+                                    <div class="text-white" style="width: 209px;">Multi-service bundle</div>
+                                    <div class="text-white" style="width: 159px;">ACME Corp AWS Private CA</div>
+                                    <div class="text-white" style="width: 132px;">Dec 31, 2027</div>
+                                    <div class="text-chainguard-text-secondary text-right" style="width: 98px;">1 week ago</div>
                                 </div>
                             </div>
                         </div>
@@ -297,15 +300,18 @@
 
                     <!-- GCP Expandable Bundle -->
                     <div class="expandable-bundle">
-                        <div class="hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
+                        <div class="certificate-row hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="toggleBundle(this)">
                             <div class="px-2 py-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow"></i>
-                                        <i data-lucide="folder" class="lucide text-chainguard-teal"></i>
+                                <div class="grid grid-cols-5 gap-4 text-sm px-2">
+                                    <div class="flex items-center gap-2" style="width: 238px;">
+                                        <i data-lucide="chevron-right" class="lucide text-white transition-transform bundle-arrow" style="width: 12px; height: 12px;"></i>
+                                        <i data-lucide="folder" class="lucide text-chainguard-teal" style="width: 14px; height: 14px;"></i>
                                         <span class="text-chainguard-teal font-medium cursor-pointer" onclick="event.stopPropagation(); viewCertificate('gcp-platform-bundle');">techcorp-gcp-workload-bundle (2)</span>
                                     </div>
-                                    <div class="text-chainguard-text-secondary text-sm">2 weeks ago</div>
+                                    <div class="text-white" style="width: 209px;">Workload identity bundle</div>
+                                    <div class="text-white" style="width: 159px;">TechCorp Google Cloud CA</div>
+                                    <div class="text-white" style="width: 132px;">Jan 20, 2029</div>
+                                    <div class="text-chainguard-text-secondary text-right" style="width: 98px;">2 weeks ago</div>
                                 </div>
                             </div>
                         </div>
@@ -1512,6 +1518,7 @@ HS567890abcdefghijklmnopqrstuvwxyz
         function editCertificate(certId) {
             console.log('Editing certificate:', certId);
             isEditMode = true;
+            const cert = certificateData[certId];
 
             // Update header
             const header = document.querySelector('#panelOverlay h2');
@@ -1521,6 +1528,22 @@ HS567890abcdefghijklmnopqrstuvwxyz
             const packageNameInput = document.getElementById('packageNameInput');
             packageNameInput.disabled = false;
             packageNameInput.focus();
+
+            // Replace certificate content display with editable textarea
+            const certContentContainer = document.querySelector('#panelOverlay .bg-chainguard-darker.border.border-gray-600.rounded.overflow-hidden');
+            if (certContentContainer) {
+                certContentContainer.innerHTML = `
+                    <div class="p-3">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Certificate Content</label>
+                        <textarea
+                            id="certificateContentTextarea"
+                            class="w-full h-40 bg-chainguard-darker border border-gray-600 rounded text-xs font-mono text-gray-300 p-2 resize-none"
+                            placeholder="Paste your certificate content here..."
+                        >${cert.certificateContent}</textarea>
+                        <p class="text-xs text-gray-500 mt-1">Edit the certificate content for rotation or updates. Include the full certificate chain if needed.</p>
+                    </div>
+                `;
+            }
 
             // Update footer buttons for edit mode
             document.getElementById('nextBtn').innerHTML = 'Save Changes <i data-lucide="save" class="lucide"></i>';
@@ -1544,6 +1567,7 @@ HS567890abcdefghijklmnopqrstuvwxyz
             console.log('Saving changes for certificate:', certId);
 
             const newPackageName = document.getElementById('packageNameInput').value.trim();
+            const newCertificateContent = document.getElementById('certificateContentTextarea')?.value.trim();
 
             // Validate package name
             if (!newPackageName) {
@@ -1551,10 +1575,26 @@ HS567890abcdefghijklmnopqrstuvwxyz
                 return;
             }
 
+            // Validate certificate content (only for custom uploaded certificates)
+            const cert = certificateData[certId];
+            if (cert && cert.type === 'individual' && newCertificateContent) {
+                // Basic validation for certificate format
+                if (!newCertificateContent.includes('BEGIN CERTIFICATE') || !newCertificateContent.includes('END CERTIFICATE')) {
+                    if (!confirm('The certificate content doesn\'t appear to be in standard PEM format. Do you want to save it anyway?')) {
+                        return;
+                    }
+                }
+            }
+
             // Update certificate data
             if (certificateData[certId]) {
                 certificateData[certId].packageName = newPackageName;
                 certificateData[certId].lastUpdated = 'Just now';
+
+                // Update certificate content if it was edited
+                if (newCertificateContent && cert.type === 'individual') {
+                    certificateData[certId].certificateContent = newCertificateContent;
+                }
             }
 
             // Update table row
@@ -1566,8 +1606,11 @@ HS567890abcdefghijklmnopqrstuvwxyz
                 updatedCell.textContent = 'Just now';
             }
 
-            // Show success notification
-            showNotification('Certificate package updated successfully!', 'success');
+            // Show success notification with appropriate message
+            const message = newCertificateContent && cert.type === 'individual'
+                ? 'Certificate package and content updated successfully! Certificate rotation complete.'
+                : 'Certificate package updated successfully!';
+            showNotification(message, 'success');
 
             // Return to view mode
             viewCertificate(certId);
