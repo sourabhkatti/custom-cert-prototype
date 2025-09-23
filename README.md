@@ -19,7 +19,13 @@ certs-prototype/
 ├── app/                         # Next.js application
 ├── components/                  # React components
 ├── lib/                         # TypeScript types and mock data
+├── tests/                       # Playwright test suites
+│   ├── demo-workflow.spec.ts    # End-to-end workflow tests
+│   └── certificate-suggestions.spec.ts # Certificate selection tests
+├── TEST_REPORT.md               # Comprehensive test validation report
+├── WORKFLOW_TEST_SUMMARY.md     # Testing summary and fixes applied
 ├── package.json                 # Project dependencies
+├── playwright.config.ts         # Playwright test configuration
 └── tailwind.config.js           # Styling configuration
 ```
 
@@ -45,6 +51,44 @@ certs-prototype/
 4. Review certificate details and edit package name
 5. Click **"Create Package"**
 6. Package appears in main table
+
+### Running Automated Tests
+The project includes comprehensive Playwright tests for workflow validation:
+
+```bash
+# Install dependencies
+npm install
+
+# Run all tests
+npm test
+
+# Run tests in headed mode (visible browser)
+npm run test:headed
+```
+
+**Test Coverage:**
+- ✅ All 5 certificate bundle workflows (DoD ECA, DoD WCF, Brazilian PKI, AWS, GCP)
+- ✅ Certificate bundle selection and highlighting
+- ✅ Package configuration and creation
+- ✅ Table updates and data validation
+- ✅ UI interaction patterns and error handling
+
+## ✅ Workflow Validation Status
+
+**All 5 certificate bundle workflows are fully functional and tested:**
+
+As of the latest commit, comprehensive testing has validated that all certificate bundle workflows work correctly from start to finish. Previous issues with missing JavaScript handlers for DoD WCF and Brazilian PKI bundles have been resolved.
+
+**Key Fixes Applied:**
+- ✅ Fixed missing JavaScript handlers for DoD WCF bundle (`dod-wcf`)
+- ✅ Fixed missing JavaScript handlers for Brazilian PKI bundle (`icp-brazil`)
+- ✅ Added complete package creation logic for all 5 bundles
+- ✅ Enhanced table insertion with proper certificate metadata
+- ✅ Validated all workflows with automated Playwright tests
+
+**Test Reports Available:**
+- `TEST_REPORT.md` - Detailed test results and validation status
+- `WORKFLOW_TEST_SUMMARY.md` - Summary of issues found and fixes applied
 
 ## 📜 Certificate Bundles
 
