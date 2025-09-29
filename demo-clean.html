@@ -417,11 +417,25 @@
                         <h3 class="text-base font-semibold text-white mb-2">Upload Certificate</h3>
                         <p class="text-xs text-gray-300 mb-4">Upload your own certificate bundle in PEM or PKCS#7 format</p>
 
-                        <div class="space-y-6">
+                        <div class="space-y-4">
+                            <!-- Demo Certificate Option -->
+                            <div class="flex items-center justify-between p-3 bg-chainguard-teal/5 border border-chainguard-teal/20 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="file-text" class="lucide text-chainguard-teal" style="width: 1.25rem; height: 1.25rem;"></i>
+                                    <div>
+                                        <h4 class="text-sm font-medium text-white">Quick Demo</h4>
+                                        <p class="text-xs text-gray-400">Use a sample certificate for testing</p>
+                                    </div>
+                                </div>
+                                <button id="demo-cert-btn" onclick="useDemoCertificate()" class="px-3 py-1.5 bg-chainguard-teal text-black text-xs font-medium rounded hover:bg-chainguard-teal/90 transition-colors">
+                                    Use Demo Cert
+                                </button>
+                            </div>
+
                             <!-- Drag & Drop Area -->
-                            <div id="upload-area" class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center cursor-pointer hover:border-gray-500 transition-colors" style="background-color: rgba(17, 0, 51, 0.3);">
+                            <div id="upload-area" class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:border-gray-500 transition-colors" style="background-color: rgba(17, 0, 51, 0.3);">
                                 <input type="file" id="file-input" class="hidden" accept=".pem,.crt,.cer,.p7b,.p7c">
-                                <i data-lucide="upload" class="lucide text-gray-400 mx-auto mb-4" style="width: 2rem; height: 2rem;"></i>
+                                <i data-lucide="upload" class="lucide text-gray-400 mx-auto mb-3" style="width: 1.5rem; height: 1.5rem;"></i>
                                 <h4 class="text-white font-medium text-sm mb-1">Drop certificate file here or click to browse</h4>
                                 <p class="text-xs text-gray-300">Supports PEM, CRT, CER, PKCS#7 formats</p>
                             </div>
@@ -1157,6 +1171,61 @@ HS567890abcdefghijklmnopqrstuvwxyz
             if (files.length > 0) {
                 processUploadedFile(files[0]);
             }
+        }
+
+        function useDemoCertificate() {
+            console.log('Using demo certificate...');
+
+            // Create a realistic demo certificate for enterprise demo
+            const demoCertContent = `-----BEGIN CERTIFICATE-----
+MIIFojCCA4qgAwIBAgIJAMvXr8B3F4dNMA0GCSqGSIb3DQEBCwUAMIGOMQswCQYD
+VQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5j
+aXNjbzEaMBgGA1UECgwRRGVtbyBFbnRlcnByaXNlIEluYzEcMBoGA1UECwwTSW50
+ZXJuYWwgSW5mcmFzdHJ1Y3R1cmUxIjAgBgNVBAMMGWRlbW8uaW50ZXJuYWwuZW50
+ZXJwcmlzZS5jb20wHhcNMjQwMTAxMDAwMDAwWhcNMjcxMjMxMjM1OTU5WjCBjjEL
+MAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNhbiBG
+cmFuY2lzY28xGjAYBgNVBAoMEURlbW8gRW50ZXJwcmlzZSBJbmMxHDAaBgNVBAsM
+E0ludGVybmFsIEluZnJhc3RydWN0dXJlMSIwIAYDVQQDDBlkZW1vLmludGVybmFs
+LmVudGVycHJpc2UuY29tMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAQEA
+vLKxoUm7s9V2nP4Q8uE5R6yF3kN8L2mT9vC6r3dFZ5V8Nk4YR8YPRQ9X2wV7Kxg
+U4J8nH1R6eF4Qp3mT9zL6wE5N8zXvY2rD4kF7gH5I3jW2TqOB8jCB7zAdBgNVHQ
+4EFgQUwNBvM2I8L5sW7KpQz9xM3tLuEr5ogDAwDQYDVR0TAQH/BAIwADALBgNVHQ
+8EBAMCBaAwIAYDVR0lAQH/BBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMEEGA1UdHw
+Q6MDgwNqA0oDKGMGh0dHA6Ly9jcmwuZGVtby5lbnRlcnByaXNlLmNvbS9kZW1vLW
+ludGVybmFsLWNhLmNybDANBgkqhkiG9w0BAQsFAAOCAgEAn4R7vG8P5yT3zL6w
+E5N8zXvY2rD4kF7gH5I3jW2TqOB8jCBdNmF7nM5vE8Q2R7lH9kZ3vT6rF4kY8m
+N2B5xP3dF7gH9vE2rL5nK8B3vR4zT6wL8N7kF3gH5I3jW2TqOB8jCB7zRw8dLN
+2gH3vE2rL5nK8B3vR4zT6wL8N7kF3gH5I3jW2TqOB8jCBdWK2nV4nD3xI9FEDR
+AMP123GH5E8fw3ReHS/itcp9AEFC4ETwumtfwlS+tmxBU3ulJPATIHC/TCOg6Tk
+svijvwT8RJdmgOUQj1u/+PEo6C7tgBgM5t0RR3kYCFI2j1tRObJ4XVFELK567890
+abcdefghijklmnopqrstuvwxyzABCDEF1234567890DEMO-ENTERPRISE-INTERNAL-CA
+-----END CERTIFICATE-----`;
+
+            // Create a fake file object for demo purposes
+            const demoFile = {
+                name: 'demo-enterprise-ca.pem',
+                size: demoCertContent.length,
+                type: 'application/x-pem-file'
+            };
+
+            // Set the global variables
+            uploadedFile = demoFile;
+            uploadedFileContent = demoCertContent;
+
+            // Display the certificate preview
+            displayCertificatePreview(demoCertContent);
+
+            // Auto-generate package name
+            document.getElementById('upload-package-name').value = 'demo-enterprise-internal-ca';
+
+            // Show next button
+            document.getElementById('nextBtn').classList.remove('hidden');
+
+            // Update the demo button to show it was used
+            const demoBtn = document.getElementById('demo-cert-btn');
+            demoBtn.textContent = 'Demo Cert Loaded ✓';
+            demoBtn.disabled = true;
+            demoBtn.className = 'px-3 py-1.5 bg-green-500/20 text-green-400 text-xs font-medium rounded border border-green-500/40';
         }
 
         function processUploadedFile(file) {
